@@ -7,6 +7,9 @@ from sklearn.metrics import accuracy_score, classification_report
 import joblib
 import os
 
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+
 def load_data():
     # Simulate loading data (replace with actual data loading logic later)
     print("Loading synthetic data...")
@@ -26,13 +29,17 @@ def train(output_dir="models"):
         X, y, test_size=0.2, random_state=42
     )
     
-    # Baseline Model: Logistic Regression
-    print("Training Baseline Model (Logistic Regression)...")
-    model = LogisticRegression(max_iter=1000)
-    model.fit(X_train, y_train)
+    # Improved Model: Pipeline with Scaling
+    print("Training Improved Model (Scaling + Logistic Regression)...")
+    pipeline = Pipeline([
+        ('scaler', StandardScaler()),
+        ('model', LogisticRegression(max_iter=1000))
+    ])
+    
+    pipeline.fit(X_train, y_train)
     
     # Evaluation
-    y_pred = model.predict(X_test)
+    y_pred = pipeline.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
     print(f"Model Accuracy: {accuracy:.4f}")
     print("Classification Report:")
@@ -40,8 +47,8 @@ def train(output_dir="models"):
     
     # Save model
     os.makedirs(output_dir, exist_ok=True)
-    model_path = os.path.join(output_dir, "baseline_model.pkl")
-    joblib.dump(model, model_path)
+    model_path = os.path.join(output_dir, "model_v0.2.0.pkl")
+    joblib.dump(pipeline, model_path)
     print(f"Model saved to {model_path}")
 
 if __name__ == "__main__":
