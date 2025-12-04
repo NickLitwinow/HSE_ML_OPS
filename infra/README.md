@@ -1,38 +1,38 @@
-# Infrastructure Deployment
+# Развертывание Инфраструктуры
 
-This directory contains Terraform configuration to deploy a Virtual Machine in Yandex.Cloud.
+В этой директории находится конфигурация Terraform для развертывания Виртуальной Машины в Yandex.Cloud.
 
-## Prerequisites
-1.  Install Terraform.
-2.  Install Yandex Cloud CLI (`yc`).
-3.  Authenticate: `yc init`.
-4.  Create an SSH key pair: `ssh-keygen -t rsa`.
+## Предварительные требования
+1.  Установите Terraform.
+2.  Установите Yandex Cloud CLI (`yc`).
+3.  Аутентификация: `yc init`.
+4.  Создайте пару SSH-ключей: `ssh-keygen -t rsa`.
 
-## Usage
+## Использование
 
-1.  **Initialize Terraform:**
+1.  **Инициализация Terraform:**
     ```bash
     terraform init
     ```
 
-2.  **Check the plan:**
-    You need to provide your `subnet_id`. You can find it in the Yandex Cloud Console or via `yc vpc subnet list`.
+2.  **Проверка плана:**
+    Вам нужно указать ваш `subnet_id`. Вы можете найти его в консоли Yandex Cloud или через `yc vpc subnet list`.
     ```bash
-    terraform plan -var="subnet_id=<YOUR_SUBNET_ID>"
+    terraform plan -var="subnet_id=<ВАШ_SUBNET_ID>"
     ```
 
-3.  **Apply changes:**
+3.  **Применение изменений:**
     ```bash
-    terraform apply -var="subnet_id=<YOUR_SUBNET_ID>"
+    terraform apply -var="subnet_id=<ВАШ_SUBNET_ID>"
     ```
 
-4.  **Connect to VM:**
-    Use the output IP address:
+4.  **Подключение к VM:**
+    Используйте IP-адрес из вывода команды:
     ```bash
     ssh ubuntu@<EXTERNAL_IP>
     ```
 
-5.  **Destroy resources:**
+5.  **Удаление ресурсов:**
     ```bash
-    terraform destroy -var="subnet_id=<YOUR_SUBNET_ID>"
+    terraform destroy -var="subnet_id=<ВАШ_SUBNET_ID>"
     ```
