@@ -6,15 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.3.0] - 2025-11-27
-### Changed
-- Docker startup (added --reload)
-### Added
-- Base model endpoint (refactored to use `dummy_model` module)
-- Tests for base model
-- Docker Compose configuration
-- **Merged**: Standardized API endpoint to `/predict`
-- **Merged**: Added error handling for edge cases (500 Error)
-- **Merged**: Infrastructure as Code (Terraform)
+### Изменено
+- Запуск Docker (добавлен флаг --reload)
+### Добавлено
+- Эндпоинт базовой модели (рефакторинг с использованием модуля `dummy_model`)
+- Тесты для базовой модели
+- Конфигурация Docker Compose
+- **Merged**: Стандартизирован API эндпоинт на `/predict`
+- **Merged**: Добавлена обработка ошибок для граничных случаев (Ошибка 500)
+- **Merged**: Инфраструктура как код (Terraform)
 
 ## [0.2.0] - 2025-11-20
 ### Changed

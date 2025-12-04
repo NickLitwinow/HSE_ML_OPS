@@ -3,7 +3,7 @@ from src.app.main import app
 
 client = TestClient(app)
 
-# 1. Happy Path
+# 1. Успешный сценарий (Happy Path)
 def test_predict_happy_path():
     payload = {
         "age": 30,
@@ -19,9 +19,9 @@ def test_predict_happy_path():
     assert data["prediction"] in ["low_risk", "high_risk"]
     assert isinstance(data["score"], float)
 
-# 2. Bad Input (Validation Error)
+# 2. Некорректный ввод (Ошибка валидации)
 def test_predict_bad_input():
-    # Missing required field 'income'
+    # Отсутствует обязательное поле 'income'
     payload = {
         "age": 30,
         "months_on_book": 12,
@@ -31,7 +31,7 @@ def test_predict_bad_input():
     assert response.status_code == 422
 
 def test_predict_invalid_type():
-    # 'age' should be int, passed string
+    # 'age' должно быть int, передана строка
     payload = {
         "age": "thirty", 
         "income": 60000.0,
@@ -41,21 +41,21 @@ def test_predict_invalid_type():
     response = client.post("/predict", json=payload)
     assert response.status_code == 422
 
-# 3. Health Check
+# 3. Проверка работоспособности (Health Check)
 def test_health_check():
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok", "model_loaded": True}
 
-# 4. Root
+# 4. Корневой эндпоинт
 def test_read_main():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Welcome to the Credit Default Prediction Service"}
+    assert response.json() == {"message": "Добро пожаловать в Сервис Прогнозирования Дефолта по Кредитам"}
 
-# 5. Star Task: Edge Case (500 Error)
+# 5. Задание со звездочкой: Граничный случай (Ошибка 500)
 def test_predict_internal_error():
-    # Simulate division by zero by passing income=0
+    # Симуляция деления на ноль передачей income=0
     payload = {
         "age": 30,
         "income": 0.0,
@@ -64,9 +64,9 @@ def test_predict_internal_error():
     }
     response = client.post("/predict", json=payload)
     assert response.status_code == 500
-    assert "Internal Server Error" in response.json()["detail"]
+    assert "Внутренняя ошибка сервера" in response.json()["detail"]
 
-# 6. Feature Branch Tests (Merged)
+# 6. Тесты из ветки функциональности (Merged)
 def test_score_low_risk():
     data = {
         "age": 25,
